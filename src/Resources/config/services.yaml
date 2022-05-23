@@ -1,0 +1,6 @@
+services:
+    Innomedio\Sulu\ImageOptimizerBundle\EventListener\ImageUploadRequestListener:
+        arguments:
+            $configuration: '%innomedio_sulu_image_optimize_config%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }

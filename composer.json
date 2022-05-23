@@ -1,0 +1,42 @@
+{
+    "name": "innomedio/sulu-image-optimizer-bundle",
+    "type": "symfony-bundle",
+    "description": "Optimizes images before they are being uploaded and stored in the Sulu media library",
+    "keywords": [
+        "innomedio",
+        "symfony",
+        "sulu",
+        "image",
+        "upload"
+    ],
+    "homepage": "https://www.innomedio.be",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ewald Vanderveken",
+            "email": "ewald.vanderveken@innomedio.be"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "sulu/sulu": "^2.2",
+        "jackalope/jackalope-doctrine-dbal": "^1.3",
+        "spatie/image-optimizer": "^1.6"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpro/grumphp": "^1.3",
+        "phpstan/phpstan": "^0.12.85"
+    },
+    "autoload": {
+        "psr-4": {
+            "Innomedio\\Sulu\\ImageOptimizerBundle\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "phpro/grumphp": true
+        }
+    }
+}

@@ -1,0 +1,8 @@
+/vendor/
+composer.lock
+.idea/
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.dist
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
