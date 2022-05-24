@@ -25,7 +25,12 @@ class ImageUploadRequestListener
             return;
         }
 
-        if ($event->getRequest()->attributes->get('_route') !== 'sulu_media.post_media') {
+        $uploadRoutes = [
+            'sulu_media.post_media',
+            'sulu_media.post_media_trigger',
+        ];
+
+        if (!in_array($event->getRequest()->attributes->get('_route'), $uploadRoutes)) {
             return;
         }
 
