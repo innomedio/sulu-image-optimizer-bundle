@@ -46,7 +46,7 @@ class ImageUploadRequestListener
             $extension = $uploadedFile->getClientOriginalExtension();
 
             if ($this->configuration['enabled'] === true) {
-                $this->logger->info('Optimize '.$uploadedFile->getClientOriginalName());
+                $this->logger?->info('Optimize '.$uploadedFile->getClientOriginalName());
 
                 $optimizer = OptimizerChainFactory::create();
 
@@ -66,7 +66,7 @@ class ImageUploadRequestListener
                 $width = $sizes->getWidth();
                 $height = $sizes->getHeight();
 
-                $this->logger->info(
+                $this->logger?->info(
                     sprintf('Resize %s - Original size is %dx%d', $uploadedFile->getClientOriginalName(), $width, $height)
                 );
 
