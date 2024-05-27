@@ -18,15 +18,15 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "sulu/sulu": "^2.2",
-        "jackalope/jackalope-doctrine-dbal": "^1.3",
+        "php": "^8.2",
+        "sulu/sulu": "^2.6",
+        "jackalope/jackalope-doctrine-dbal": "^2.0",
         "spatie/image-optimizer": "^1.6"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
-        "phpro/grumphp": "^1.3",
-        "phpstan/phpstan": "^0.12.85"
+        "phpro/grumphp": "^2.4",
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +36,8 @@
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
-            "phpro/grumphp": true
+            "phpro/grumphp": true,
+            "php-http/discovery": true
         }
     }
 }

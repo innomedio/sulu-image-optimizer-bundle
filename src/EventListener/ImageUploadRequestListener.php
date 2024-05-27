@@ -11,7 +11,7 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
-class ImageUploadRequestListener
+readonly class ImageUploadRequestListener
 {
     public function __construct(
         private array $configuration = [],
