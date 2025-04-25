@@ -20,8 +20,7 @@
     "require": {
         "php": "^8.2",
         "sulu/sulu": "^2.6",
-        "jackalope/jackalope-doctrine-dbal": "^2.0",
-        "spatie/image-optimizer": "^1.6"
+        "spatie/image": "^3.8"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",

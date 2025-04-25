@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Innomedio\Sulu\ImageOptimizerBundle\EventListener;
 
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 use Psr\Log\LoggerInterface;
+use Spatie\Image\Enums\ImageDriver;
+use Spatie\Image\Image;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -43,56 +43,33 @@ readonly class ImageUploadRequestListener
                 return;
             }
 
-            $extension = $uploadedFile->getClientOriginalExtension();
+            $this->logger?->info('Optimize '.$uploadedFile->getClientOriginalName());
 
-            if ($this->configuration['enabled'] === true) {
-                $this->logger?->info('Optimize '.$uploadedFile->getClientOriginalName());
+            $optimizer = OptimizerChainFactory::create();
 
-                $optimizer = OptimizerChainFactory::create();
-
-                if ($this->logger instanceof LoggerInterface) {
-                    $optimizer->useLogger($this->logger);
-                }
-
-                $optimizer
-                    ->optimize($file);
+            if ($this->logger instanceof LoggerInterface) {
+                $optimizer->useLogger($this->logger);
             }
 
-            if ($this->configuration['resize']['enabled'] === true) {
-                $size = $this->configuration['resize']['max_size'];
+            if ($this->configuration['enabled'] === true) {
+                $image = Image::useImageDriver(ImageDriver::Gd)
+                    ->format($uploadedFile->getClientOriginalExtension())
+                    ->loadFile($file)
+                    ->optimize($optimizer);
 
-                $image = (new Imagine())->open($file);
-                $sizes = $image->getSize();
-                $width = $sizes->getWidth();
-                $height = $sizes->getHeight();
+                if ($this->configuration['resize']['enabled'] === true) {
+                    $maxSize = $this->configuration['resize']['max_size'];
+                    $width = $image->getWidth();
+                    $height = $image->getHeight();
 
-                $this->logger?->info(
-                    sprintf('Resize %s - Original size is %dx%d', $uploadedFile->getClientOriginalName(), $width, $height)
-                );
-
-                if ($width > $height && $width > $size) {
-                    $ratio = $width / $size;
-                    $newHeight = $height / $ratio;
-
-                    $image
-                        ->resize(new Box($size, $newHeight))
-                        ->save($file, [
-                            'format' => $extension,
-                        ]);
-
-                    return;
+                    if ($width > $height && $width > $maxSize) {
+                        $image->width($maxSize);
+                    } elseif ($height > $width && $height > $maxSize) {
+                        $image->height($maxSize);
+                    }
                 }
 
-                if ($height > $width && $height > $size) {
-                    $ratio = $height / $size;
-                    $newWidth = $width / $ratio;
-
-                    $image
-                        ->resize(new Box($newWidth, $size))
-                        ->save($file, [
-                            'format' => $extension,
-                        ]);
-                }
+                $image->save($file);
             }
         }
     }
