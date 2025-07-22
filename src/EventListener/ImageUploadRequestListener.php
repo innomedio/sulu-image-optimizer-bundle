@@ -43,6 +43,14 @@ readonly class ImageUploadRequestListener
                 return;
             }
 
+            $extension = strtolower($uploadedFile->getClientOriginalExtension());
+            $ignoredTypes = $this->configuration['ignore_types'] ?? [];
+
+            if (in_array($extension, $ignoredTypes, true)) {
+                $this->logger?->info(sprintf('Skipping optimization for ignored type: %s', $extension));
+                return;
+            }
+
             $this->logger?->info('Optimize '.$uploadedFile->getClientOriginalName());
 
             $optimizer = OptimizerChainFactory::create();
