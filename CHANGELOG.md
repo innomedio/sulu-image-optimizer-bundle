@@ -1,3 +1,7 @@
+# v3.0
+
+- Update for Sulu 3.0
+
 # v2.2
 
 - Added support for skipping image optimization based on file extension via `ignore_types` config option.

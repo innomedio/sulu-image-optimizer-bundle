@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "sulu/sulu": "^2.6",
+        "sulu/sulu": "^3.0",
         "spatie/image": "^3.8"
     },
     "require-dev": {
