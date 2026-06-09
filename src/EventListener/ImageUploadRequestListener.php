@@ -13,6 +13,19 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 readonly class ImageUploadRequestListener
 {
+    private const MIME_TO_FORMAT = [
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/gif'  => 'gif',
+        'image/webp' => 'webp',
+        'image/avif' => 'avif',
+    ];
+
+    /** Normalises ignore_types entries so 'jpeg' and 'jpg' are treated as the same format. */
+    private const FORMAT_ALIASES = [
+        'jpeg' => 'jpg',
+    ];
+
     public function __construct(
         private array $configuration = [],
         private ?LoggerInterface $logger = null
@@ -38,16 +51,23 @@ readonly class ImageUploadRequestListener
         foreach ($event->getRequest()->files as $uploadedFile) {
             $file = $uploadedFile->getPath().'/'.$uploadedFile->getFilename();
 
-            // Ignore non-image files
-            if (!@is_array(getimagesize($file))) {
+            $imageInfo = @getimagesize($file);
+            if (!is_array($imageInfo)) {
                 return;
             }
 
-            $extension = strtolower($uploadedFile->getClientOriginalExtension());
-            $ignoredTypes = $this->configuration['ignore_types'] ?? [];
+            $format = self::MIME_TO_FORMAT[$imageInfo['mime']] ?? null;
+            if ($format === null) {
+                return;
+            }
 
-            if (in_array($extension, $ignoredTypes, true)) {
-                $this->logger?->info(sprintf('Skipping optimization for ignored type: %s', $extension));
+            $ignoredTypes = array_map(
+                static fn($t) => self::FORMAT_ALIASES[(string) $t] ?? (string) $t,
+                $this->configuration['ignore_types'] ?? []
+            );
+
+            if (in_array($format, $ignoredTypes, true)) {
+                $this->logger?->info(sprintf('Skipping optimization for ignored type: %s', $format));
                 return;
             }
 
@@ -61,7 +81,7 @@ readonly class ImageUploadRequestListener
 
             if ($this->configuration['enabled'] === true) {
                 $image = Image::useImageDriver(ImageDriver::Gd)
-                    ->format($uploadedFile->getClientOriginalExtension())
+                    ->format($format)
                     ->loadFile($file)
                     ->optimize($optimizer);
 

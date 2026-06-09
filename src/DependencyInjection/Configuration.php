@@ -33,9 +33,9 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('ignore_types')
-                    ->prototype('scalar')->end()
+                    ->prototype('scalar')->cannotBeEmpty()->end()
                     ->defaultValue([])
-                    ->info('A list of image types to exclude from optimization, which can be useful for formats like GIFs that often don\'t benefit from resizing.')
+                    ->info('A list of image formats to exclude from optimization (e.g. gif, webp). Format is detected from file content, not filename.')
                 ->end()
             ->end()
         ;
