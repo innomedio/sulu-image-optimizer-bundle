@@ -41,7 +41,7 @@ innomedio_sulu_image_optimize_config:
 
   ignore_types:
     - gif
-    - bmp
+    - webp
 ```
 
 ### Configuration Reference
@@ -50,7 +50,7 @@ innomedio_sulu_image_optimize_config:
 |---------------------|-------------|----------|-----------------------------------------------------------------------------|
 | `enabled`           | boolean     | `true`   | Whether optimization is active                                              |
 | `logger`            | string/null | `null`   | (Optional) PSR logger service ID                                            |
-| `ignore_types`      | array       | `[]`     | List of file extensions to skip optimization (e.g. `gif`, `bmp`, `webp`)   |
+| `ignore_types`      | array       | `[]`     | List of image formats to skip optimization (e.g. `gif`, `webp`). Formats are detected from file content, not filename. Unsupported formats (e.g. `bmp`) are skipped automatically. |
 | `resize.enabled`    | boolean     | `true`   | Whether resizing is active                                                  |
 | `resize.max_size`   | integer     | `4000`   | Maximum width or height in pixels                                           |
 
@@ -64,7 +64,7 @@ The bundle listens to image upload requests on Sulu routes like:
 Once detected, it:
 
 1. Validates the file is an image
-2. Optionally skips optimization based on extension (`ignore_types`)
+2. Optionally skips optimization based on detected image format (`ignore_types`)
 3. Optimizes the file using [Spatie Image Optimizer](https://github.com/spatie/image-optimizer)
 4. Optionally resizes the image if it exceeds the configured `max_size`
 5. Saves the modified image before it's passed to Sulu
