@@ -1,3 +1,7 @@
+# v3.1
+
+- Fixed image uploads with uppercase extensions (`.JPG`, `.PNG`) failing with `UnsupportedImageFormat`, along with other improvements to format detection and `ignore_types` handling (#1) (@psalamontech)
+
 # v3.0
 
 - Update for Sulu 3.0
