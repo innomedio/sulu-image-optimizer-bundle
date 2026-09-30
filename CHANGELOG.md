@@ -1,3 +1,9 @@
+# Abandoned
+
+This bundle is no longer maintained. Use
+[`eekes/sulu-image-optimizer-bundle`](https://packagist.org/packages/eekes/sulu-image-optimizer-bundle)
+instead; see the README for how to switch.
+
 # v3.1
 
 - Fixed image uploads with uppercase extensions (`.JPG`, `.PNG`) failing with `UnsupportedImageFormat`, along with other improvements to format detection and `ignore_types` handling (#1) (@psalamontech)

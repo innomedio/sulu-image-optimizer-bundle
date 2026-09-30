@@ -10,6 +10,7 @@
         "upload"
     ],
     "homepage": "https://www.innomedio.be",
+    "abandoned": "eekes/sulu-image-optimizer-bundle",
     "license": "MIT",
     "authors": [
         {

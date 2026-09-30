@@ -1,5 +1,27 @@
 # SuluImageOptimizerBundle
 
+> [!WARNING]
+> **This bundle is abandoned and no longer maintained.** It is replaced by
+> [`eekes/sulu-image-optimizer-bundle`](https://packagist.org/packages/eekes/sulu-image-optimizer-bundle).
+>
+> The successor fixes the known problems of this bundle: an optimized image that turned out larger
+> was stored anyway, square images were never resized, animated GIFs were flattened, and a failure
+> or an image too large for the memory limit could break the upload. It also sanitizes SVG uploads,
+> keeps a log of every upload in the Sulu admin, and can optimize the existing media library.
+>
+> ```bash
+> composer remove innomedio/sulu-image-optimizer-bundle
+> composer require eekes/sulu-image-optimizer-bundle
+> ```
+>
+> The configuration key and the bundle class changed. The steps are in `docs/migrating.md` of the new
+> package. The two bundles cannot be installed together.
+>
+> The successor supports Sulu 3 only. Projects on Sulu 2 can keep using v2.2 of this bundle, which
+> stays installable but receives no fixes.
+
+The documentation below describes the last release, v3.1.
+
 This bundle optimizes and optionally resizes images **before** they're added to the Sulu media library. 
 
 Its especially useful when working with large files on shared hosting environments, where Sulu's default image 
